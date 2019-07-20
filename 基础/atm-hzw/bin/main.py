@@ -8,7 +8,7 @@ sys.path.append(BASE_DIR)
 #导入用户管理模块
 from user_auth import auth
 #导入ATM管理模块
-from atm import atm
+from atm import atm_main
 #导入shopping购物模块
 from shopping import shopping
 
