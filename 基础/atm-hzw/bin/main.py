@@ -12,27 +12,13 @@ from atm import atm_main
 #导入shopping购物模块
 from shopping import shopping
 
-'''
 while True:
-    print("某银行网上商城")
-    print("\t1.逛商场")
-    print("\t2.ATM管理")
-    choise = input("选择进入(q退出程序)>>>:").strip()
-    if choise == "1":
-        shopping.shop_run()  #进入购物接口
-    elif choise == "2":
-        atm.atm_run()        #进入ATM管理接口
-    elif choise == "q":
-        exit(0)
-'''
-
-while True:
-    print("欢迎访问X银行网上商城")
-    print("请你按照提示进行操作，祝购物愉快！")
-    print("\t1.用户登录")
-    print("\t2.用户注册")
-    print("\t3.用户销户")
-    choise = input("选择进入(q退出程序)>>>:").strip()
+    print("欢迎访问X银行网上商城!")
+    print("请你按照提示进行操作，祝购物愉快")
+    print("\033[34;1m\t1.用户登录\033[0m")
+    print("\033[34;1m\t2.用户注册\033[0m")
+    print("\033[34;1m\t3.用户销户\033[0m")
+    choise = input("请选择进入(q退出程序)>>>:").strip()
     if choise == "1":
         auth.loggin()
     elif choise == "2":

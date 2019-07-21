@@ -34,9 +34,9 @@ def loggin():
             log = "用户%s登录成功。" % username
             atm_main.atm_logs(log)
             while True:
-                print("\t1.逛商场")
-                print("\t2.ATM管理")
-                choise = input("选择进入(b返回登录界面)>>>:").strip()
+                print("\033[34;1m\t1.逛商场\033[0m")
+                print("\033[34;1m\t2.ATM管理\033[0m")
+                choise = input("请选择进入(b返回登录界面)>>>:").strip()
                 if choise == "1":
                     shopping.shop_run(userinfo_login)  # 进入购物接口
                 elif choise == "2":

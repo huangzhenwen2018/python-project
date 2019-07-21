@@ -22,10 +22,10 @@ curr_goods = '' #当前用户商品选择情况
 
 def showgoods_list():
     print("商品列表展示:")
-    print("\t%-7s%-10s%-10s" % ("商品号", "商品名", "价格"))
+    print("\033[34;1m\t%-7s%-10s%-10s\033[0m" % ("商品号", "商品名", "价格"))
     for i in goods_list:
         for j in goods_list[i]:
-            print("\t%-10s%-13s%-13s"%(i,j,goods_list[i][j]),end='\n')
+            print("\033[34;1m\t%-10s%-13s%-13s\033[0m"%(i,j,goods_list[i][j]),end='\n')
 
 #购物车物品展示
 def showcar(data):
@@ -33,9 +33,9 @@ def showcar(data):
     sum = 0
     for i in data:
         for j in i:
-            print("商品名：%-10s  价格：%s元" % (j, i[j]))
+            print("\033[34;1m商品名：%-10s  价格：%s元\033[0m" % (j, i[j]))
             sum += i[j]
-    print("\t\t\t\t合计：%s元" % sum)
+    print("\033[34;1m\t\t\t\t合计：%s元\033[0m" % sum)
     return int(sum)
 
 #商品加到购物车里
@@ -56,7 +56,7 @@ def shop_run(acc_data):
         choise = input("请选择你要购买的商品号（按q返回上一层,c查看购物车和结算）：").strip()
         if choise and choise in goods_list:
             global curr_goods  # 定义为全局变量
-            shopping = input("该商品是否加入到购物车：1.是 2.否 >>>:")
+            shopping = input("该商品是否加入到购物车：\033[31;1m1.是 2.否 \033[0m>>>:")
             if shopping == "1":
                 curr_goods = shopcar(goods_list[choise])
                 print("加入购物车成功")
@@ -67,7 +67,7 @@ def shop_run(acc_data):
         elif choise == "c":
             user = acc_data
             bill = showcar(goods)
-            bill_choise = input("结算按1，取消按2：")
+            bill_choise = input("\033[31;1m结算按1，取消按2：\033[0m")
             if bill_choise == "1":
                 if curr_goods != '':  # 判断购物车为空时
                     k = atm_main.api(user, bill)  # 调用atm接口扣款
