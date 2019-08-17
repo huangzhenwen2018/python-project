@@ -8,6 +8,7 @@ sys.path.append(BASE_DIR)
 from configs import settings
 from core import admin_view
 from core import teacher_view
+from core import student_view
 from core import models
 
 
@@ -17,7 +18,7 @@ def main():
         print('\033[1;35m{}\033[0m'.format(settings.main_page))
         yourinput = input("\033[1;34m请输入你的选择： \033[0m").strip()
         if yourinput == '1':
-            pass
+            student_view.student_run()
         elif yourinput == '2':
             teacher_view.teacher_run()
         elif yourinput == '3':

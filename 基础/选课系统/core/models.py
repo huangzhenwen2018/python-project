@@ -144,7 +144,32 @@ class CourseToTeacher(BaseModel):
             ret.append(obj)
         return ret
 
+class Score:
+    def __init__(self, student_id):
+        self.studentId = student_id
+        self.score_dict = {}
 
+    def set(self, course_to_teacher_nid, number):
+        self.score_dict[course_to_teacher_nid] = number
+
+    def get(self, course_to_teacher_nid):
+        return self.score_dict.get(course_to_teacher_nid, None)
+
+
+class Student(BaseModel):
+    db_path = settings.ADMIN_DB
+
+    def __init__(self, name, password, age, classes_id):
+        self.nid = identifier.StudentNid(Student.db_path)
+        self.name = name
+        self.password = password
+        self.age = age
+        self.classesId = classes_id
+        self.score = Score(self.nid)
+
+    @staticmethod
+    def register():
+        pass
 
 
 

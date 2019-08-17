@@ -226,8 +226,8 @@ def add_class():
     return {'status': status, 'error': error, 'data': data}
 
 def show_class():
+    print("\033[33;1m 班级列表信息：\033[0m")
     for obj in models.Classes.get_all_list():
-        print("\033[33;1m 班级列表信息：\033[0m")
         print('\033[33;1m 课程：[%s] 班级：[%s] 学费：[%s]\033[0m' \
               % (obj.course_nid.get_obj_by_uuid().courseName, obj.name, obj.tuition))
 

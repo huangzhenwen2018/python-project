@@ -24,10 +24,11 @@ def teacher_main(teacher_name):
         if obj.teacher_nid.get_obj_by_uuid().name == teacher_name:
             teacher_nid = obj.teacher_nid
     while True:
-        print('\n\033[1;31m____Teacher %s____\033[0m\n'%teacher_nid.get_obj_by_uuid().name)
+        print('\n\033[1;31m欢迎您%s\033[0m\n'%teacher_nid.get_obj_by_uuid().name)
         print('\033[1;35m{}\033[0m'.format(settings.teach_view_page))
         your_input = input("\033[1;34m请输入你的选择: \033[0m").strip()
         if your_input == '1':
+            print('\033[33;1m 你所负责班级信息：\033[0m')
             classes_info(teacher_nid)
         elif your_input == '2':
             pass
@@ -42,7 +43,8 @@ def teacher_main(teacher_name):
 def classes_info(teacher_nid):
     classes_list = []
     for obj in models.CourseToTeacher.get_all_list():
-        if obj.teacher_nid.get_obj_by_uuid.name == teacher_nid.get_obj_by_uuid.name:
+        if obj.teacher_nid.get_obj_by_uuid().name == teacher_nid.get_obj_by_uuid().name:
             obj = obj.classes_nid
-            classes_list.append(obj.get_all_list())
-    return classes_list
+            classes_list.append(obj.get_obj_by_uuid())
+    for obj in classes_list:
+        print('\033[33;1m 课程[%s] 班级[%s] 学费[%s]\033[0m' %(obj.course_nid.get_obj_by_uuid().courseName, obj.name, obj.tuition))
