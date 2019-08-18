@@ -32,10 +32,17 @@ def teacher_main(teacher_name):
             classes_info(teacher_nid)
         elif your_input == '2':
             print('\033[33;1m你所负责学生信息：\033[0m')
-            student_info(teacher_nid)
+            s_list = student_info(teacher_nid)
+            for obj in s_list:
+                print("\033[33;1m学员: %s 年龄: %s 电话: %s 课程：%s 班级：%s\033[0m" % (obj.name, obj.age, obj.phone, \
+                                                                             obj.course_to_teacher_nid.get_obj_by_uuid().course_nid.get_obj_by_uuid().courseName, \
+                                                                             obj.course_to_teacher_nid.get_obj_by_uuid().classes_nid.get_obj_by_uuid().name))
         elif your_input == '3':
-            print('\033[33;1m 设置学生成绩：\033[0m')
+            print('\033[33;1m学生成绩评级：\033[0m')
             set_student_score(teacher_nid)
+        elif your_input == '4':
+            print('\033[33;1m查看学生成绩：\033[0m')
+            show_student_score(teacher_nid)
         elif your_input == 'r':
             print('\033[1;34m退出成功！\033[0m')
             break
@@ -62,12 +69,29 @@ def student_info(teacher_nid):
     for obj in models.Student.get_all_list():
         if obj.course_to_teacher_nid.uuid in c_c_t_list:
             s_list.append(obj)
-
-    for obj in s_list:
-        print("\033[33;1m学员: %s 年龄: %s 电话: %s 课程：%s 班级：%s\033[0m" %(obj.name, obj.age, obj.phone, \
-                                                                    obj.course_to_teacher_nid.get_obj_by_uuid().course_nid.get_obj_by_uuid().courseName, \
-                                                                    obj.course_to_teacher_nid.get_obj_by_uuid().classes_nid.get_obj_by_uuid().name))
-
+    return s_list
 
 def set_student_score(teacher_nid):
+    s_list = student_info(teacher_nid)
+    for k, obj in enumerate(s_list):
+        print(k, "\033[33;1m学员: %s \033[0m" %obj.name)
+    sid = int(input('\033[1;34m请选择需评级学生:\033[0m').strip())
+    student_obj = s_list[sid]
+
+    level = input("\033[1;34m请输入课程评分等级:\033[0m".strip())
+    obj = models.Score(student_obj.nid)
+    obj.set(student_obj.course_to_teacher_nid, level)
+    obj.save_score_dict()
+    print("\033[1;31m该学员评级成功！。\033[0m")
+
+def show_student_score(teacher_nid):
+    #s_list = student_info(teacher_nid)
+    #for obj in s_list:
+    #    print(obj.score.get(obj.course_to_teacher_nid))
+    #obj_list = models.Score.get_all_list()
     pass
+
+
+
+
+

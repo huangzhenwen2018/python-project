@@ -135,16 +135,32 @@ class CourseToTeacher(BaseModel):
         return ret
 
 class Score:
+    db_path = settings.SCORE_DB
     def __init__(self, student_nid):
+        self.nid = identifier.ScoreNid(Score.db_path)
         self.student_nid = student_nid
         self.score_dict = {}
 
     def set(self, course_to_teacher_nid, number):
         self.score_dict[course_to_teacher_nid] = number
 
+    def save_score_dict(self):
+        nid = str(self.nid)
+        file_path = os.path.join(self.db_path, nid)
+        file = open(file_path, 'wb')
+        pickle.dump(self.score_dict, file)
+
     def get(self, course_to_teacher_nid):
         return self.score_dict.get(course_to_teacher_nid, None)
 
+    @staticmethod
+    def get_all_list(self, course_to_teacher_nid):
+        ret = []
+        for item in os.listdir(os.path.join(Score.db_path)):
+            score_dict_list = pickle.load(open(os.path.join(Score.db_path, item), 'rb'))
+           # ret.append(obj)
+            ret = self.score_dict_list.get(course_to_teacher_nid, None)
+        return ret
 
 class Student(BaseModel):
     db_path = settings.STUDENT_DB
@@ -157,6 +173,7 @@ class Student(BaseModel):
         self.phone = phone
         self.course_to_teacher_nid = course_to_teacher_nid
         self.score = Score(self.nid)
+        #self.score_nid = score_nid
 
     @staticmethod
     def login(name, password):

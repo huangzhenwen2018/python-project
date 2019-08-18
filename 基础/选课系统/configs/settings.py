@@ -10,6 +10,8 @@ COURSE_TO_TEACHER_DB = os.path.join(BASEDIR, 'db', 'course_to_teacher')
 CLASSES_DB = os.path.join(BASEDIR, 'db', 'class')
 STUDENT_DB = os.path.join(BASEDIR, 'db', 'student')
 TEACHER_DB = os.path.join(BASEDIR, 'db', 'teacher')
+TEACHER_DB = os.path.join(BASEDIR, 'db', 'teacher')
+SCORE_DB = os.path.join(BASEDIR, 'db', 'score')
 
 main_page = '''
            欢迎进入xx大学选课系统!

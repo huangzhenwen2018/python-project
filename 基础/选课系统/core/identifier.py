@@ -8,7 +8,7 @@ def create_uuid():
 class Nid:
     def __init__(self,role,db_path):
         role_list = [
-            'admin', 'school', 'teacher', 'course', 'course_to_teacher', 'classes', 'student'
+            'admin', 'school', 'teacher', 'course', 'course_to_teacher', 'classes', 'student', 'score'
         ]
         if role not in role_list:
             raise Exception('用户角色定义错误，选项为：%s' % ','.join(role_list))
@@ -69,3 +69,7 @@ class ClassesNid(Nid):
 class StudentNid(Nid):
     def __init__(self, db_path):
         super(StudentNid, self).__init__('student', db_path)
+
+class ScoreNid(Nid):
+    def __init__(self, db_path):
+        super(ScoreNid, self).__init__('score', db_path)
