@@ -21,16 +21,6 @@ class BaseModel:
         file_path = os.path.join(self.db_path, nid)
         pickle.dump(self, open(file_path, 'wb')) #把obj对象保存到文件里面
 
-'''
-    @staticmethod
-    def get_obj_list(self):             #obj对象列表
-        ret = []
-        for item in os.listdir(os.path.join(self.db_path)):
-            obj = pickle.load(open(os.path.join(self.db_path, item), 'rb'))
-            ret.append(obj)
-        return ret
-'''
-
 class Admin(BaseModel):
     db_path = settings.ADMIN_DB
     def __init__(self,name,password):
@@ -145,8 +135,8 @@ class CourseToTeacher(BaseModel):
         return ret
 
 class Score:
-    def __init__(self, student_id):
-        self.studentId = student_id
+    def __init__(self, student_nid):
+        self.student_nid = student_nid
         self.score_dict = {}
 
     def set(self, course_to_teacher_nid, number):
@@ -157,19 +147,32 @@ class Score:
 
 
 class Student(BaseModel):
-    db_path = settings.ADMIN_DB
+    db_path = settings.STUDENT_DB
 
-    def __init__(self, name, password, age, classes_id):
+    def __init__(self, name, password, age, phone, course_to_teacher_nid):
         self.nid = identifier.StudentNid(Student.db_path)
         self.name = name
         self.password = password
         self.age = age
-        self.classesId = classes_id
+        self.phone = phone
+        self.course_to_teacher_nid = course_to_teacher_nid
         self.score = Score(self.nid)
 
     @staticmethod
-    def register():
-        pass
+    def login(name, password):
+        for item in os.listdir(os.path.join(Student.db_path)):
+            obj = pickle.load(open(os.path.join(Student.db_path, item), 'rb'))
+            if name == obj.name and password == obj.password:
+                return obj
+        return None
+
+    @staticmethod
+    def get_all_list():
+        ret = []
+        for item in os.listdir(os.path.join(Student.db_path)):
+            obj = pickle.load(open(os.path.join(Student.db_path, item), 'rb'))
+            ret.append(obj)
+        return ret
 
 
 

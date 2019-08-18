@@ -192,7 +192,7 @@ def add_course_teacher():
     print('\033[33;1m课程[%s] 班级[%s] 导师[%s] 分配成功\033[0m' % (course_obj.courseName, classes_obj.name, teacher_obj.name))
 
 def course_teacher_list():
-    print("\033[33;1m 课程讲师列表信息：\033[0m")
+    print("\033[33;1m 课程班级讲师列表信息：\033[0m")
     for obj in models.CourseToTeacher.get_all_list():
         print('\033[33;1m 课程[%s] 班级[%s] 导师[%s]\033[0m' % (obj.course_nid.get_obj_by_uuid().courseName, \
                                                          obj.classes_nid.get_obj_by_uuid().name, \

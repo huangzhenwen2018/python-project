@@ -5,7 +5,7 @@ from core import models
 from configs import settings
 
 def teacher_run():
-    print('教师界面'.center(60, '-'))
+    print('\033[1;35m欢迎进入教师系统！\033[0m')
     teacher_name = input('请输入姓名:').strip()
     teacher_password = input('请输入登陆密码:').strip()
     teacher_list = models.Teacher.get_all_list()
@@ -28,12 +28,14 @@ def teacher_main(teacher_name):
         print('\033[1;35m{}\033[0m'.format(settings.teach_view_page))
         your_input = input("\033[1;34m请输入你的选择: \033[0m").strip()
         if your_input == '1':
-            print('\033[33;1m 你所负责班级信息：\033[0m')
+            print('\033[33;1m你所负责班级信息：\033[0m')
             classes_info(teacher_nid)
         elif your_input == '2':
-            pass
+            print('\033[33;1m你所负责学生信息：\033[0m')
+            student_info(teacher_nid)
         elif your_input == '3':
-            pass
+            print('\033[33;1m 设置学生成绩：\033[0m')
+            set_student_score(teacher_nid)
         elif your_input == 'r':
             print('\033[1;34m退出成功！\033[0m')
             break
@@ -48,3 +50,24 @@ def classes_info(teacher_nid):
             classes_list.append(obj.get_obj_by_uuid())
     for obj in classes_list:
         print('\033[33;1m 课程[%s] 班级[%s] 学费[%s]\033[0m' %(obj.course_nid.get_obj_by_uuid().courseName, obj.name, obj.tuition))
+    return classes_list
+
+def student_info(teacher_nid):
+    c_c_t_list = []
+    s_list = []
+    for obj in models.CourseToTeacher.get_all_list():
+        if obj.teacher_nid.get_obj_by_uuid().name == teacher_nid.get_obj_by_uuid().name:
+            c_c_t_list.append(obj.nid.uuid)
+
+    for obj in models.Student.get_all_list():
+        if obj.course_to_teacher_nid.uuid in c_c_t_list:
+            s_list.append(obj)
+
+    for obj in s_list:
+        print("\033[33;1m学员: %s 年龄: %s 电话: %s 课程：%s 班级：%s\033[0m" %(obj.name, obj.age, obj.phone, \
+                                                                    obj.course_to_teacher_nid.get_obj_by_uuid().course_nid.get_obj_by_uuid().courseName, \
+                                                                    obj.course_to_teacher_nid.get_obj_by_uuid().classes_nid.get_obj_by_uuid().name))
+
+
+def set_student_score(teacher_nid):
+    pass
